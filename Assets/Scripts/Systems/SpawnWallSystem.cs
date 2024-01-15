@@ -39,6 +39,12 @@ namespace Systems
         }
 
         [BurstCompile]
+        private void CreateWallStructure()
+        {
+            
+        }
+
+        [BurstCompile]
         public void OnDestroy(ref SystemState state)
         {
             
