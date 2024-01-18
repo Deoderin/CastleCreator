@@ -1,28 +1,28 @@
-using System.Linq;
 using Components;
+using Mono;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Systems;
 using UnityEngine;
 
 namespace Systems
 {
-    [BurstCompile]
+    //[BurstCompile]
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     [UpdateAfter(typeof(ProjectileSpawnSystem))]
     public partial struct ProjectileLaunchSystem  : ISystem
     {
         private EntityQuery _query;
-        
-        [BurstCompile]
+
         public void OnCreate(ref SystemState state)
         {
             _query = state.GetEntityQuery(ComponentType.ReadOnly<BallProperties>());
         }
         
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             if(Input.touchCount > 0)
@@ -60,10 +60,9 @@ namespace Systems
         //ToDo switch ray 
         private float3 GetLaunchDirection()
         {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(!Physics.Raycast(ray, out var hit)) return float3.zero;
-            var worldPosition = hit.point;
-            return worldPosition;
+            Touch touch = Input.GetTouch(0);
+            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 30));
+            return touchPosition;
         }
     }    
 
