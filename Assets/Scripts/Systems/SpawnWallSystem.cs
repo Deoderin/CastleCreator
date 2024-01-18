@@ -3,7 +3,6 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
 
 namespace Systems
 {
@@ -29,9 +28,12 @@ namespace Systems
             {
                 for (int y = 0; y < wall.NumberWallToSpawn.y; y++)
                 {
-                    var block = ecb.Instantiate(wall.BlockPrefab);
-                    var blockTransform = wall.GetBlockTransform(new int2(x,y));
-                    ecb.SetComponent(block, blockTransform);
+                    for (int z = 0; z < wall.NumberWallToSpawn.z; z++)
+                    {
+                        var block = ecb.Instantiate(wall.BlockPrefab);
+                        var blockTransform = TransformExtenstion.GetBollTransform(new int3(x,y,z));
+                        ecb.SetComponent(block, blockTransform);
+                    }
                 }
             }
             

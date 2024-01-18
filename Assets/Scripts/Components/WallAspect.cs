@@ -1,6 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
+using Unity.Physics;
 
 namespace Components
 {
@@ -8,15 +8,16 @@ namespace Components
     {
         private readonly RefRO<WallProperties> _wallProperties;
         public readonly Entity Entity;
-        public int2 NumberWallToSpawn => _wallProperties.ValueRO.FieldDimension;
+        public int3 NumberWallToSpawn => _wallProperties.ValueRO.FieldDimension;
         public Entity BlockPrefab => _wallProperties.ValueRO.BlockPrefab;
-
-        public LocalTransform GetBlockTransform(int2 position)
-        {
-            return new LocalTransform()
-            {
-                Position = new float3(position.x, position.y, 0), Rotation = quaternion.identity, Scale = 1,
-            };
-        }
+    }
+    
+    public readonly partial struct ProjectileAspect : IAspect
+    {
+        private readonly RefRO<ProjectileProperties> _projectileProperties;
+        public readonly Entity Entity;
+        public float3 PositionToSpawn => _projectileProperties.ValueRO.SpawnPosition;
+        public float3 ShotDirection => _projectileProperties.ValueRO.Direction;
+        public Entity BollPrefab => _projectileProperties.ValueRO.Projectile;
     }
 }

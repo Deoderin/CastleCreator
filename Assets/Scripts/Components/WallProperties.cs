@@ -5,7 +5,7 @@ namespace Components
 {
     public struct WallProperties : IComponentData
     {
-        public int2 FieldDimension;
+        public int3 FieldDimension;
         public Entity BlockPrefab;
     }
 }
