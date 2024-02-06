@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Mono
@@ -7,6 +8,11 @@ namespace Mono
         public Font font;
         public bool showVersion = true;
         private float _deltaTime;
+
+        private void Awake()
+        {
+            Application.targetFrameRate = 60;
+        }
 
         private void Update()
         {

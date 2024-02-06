@@ -3,6 +3,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Systems
 {
@@ -31,20 +32,16 @@ namespace Systems
                     for (int z = 0; z < wall.NumberWallToSpawn.z; z++)
                     {
                         var block = ecb.Instantiate(wall.BlockPrefab);
-                        var blockTransform = TransformExtenstion.GetBollTransform(new int3(x,y,z));
+                        var blockTransform = TransformExtenstion.GetBollTransform(new int3(x, y, z));
                         ecb.SetComponent(block, blockTransform);
                     }
                 }
             }
-            
+
             ecb.Playback(state.EntityManager);
+            ecb.Dispose();
         }
 
-        [BurstCompile]
-        private void CreateWallStructure()
-        {
-            
-        }
 
         [BurstCompile]
         public void OnDestroy(ref SystemState state)

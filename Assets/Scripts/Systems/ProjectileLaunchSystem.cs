@@ -1,11 +1,9 @@
 using Components;
-using Mono;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
-using Unity.Physics.Systems;
 using UnityEngine;
 
 namespace Systems
@@ -16,10 +14,12 @@ namespace Systems
     public partial struct ProjectileLaunchSystem  : ISystem
     {
         private EntityQuery _query;
+        private ComponentLookup<PhysicsVelocity> _physicsVelocityComponent;
 
         public void OnCreate(ref SystemState state)
         {
             _query = state.GetEntityQuery(ComponentType.ReadOnly<BallProperties>());
+            _physicsVelocityComponent = state.GetComponentLookup<PhysicsVelocity>(false);
         }
         
         //[BurstCompile]
@@ -27,25 +27,26 @@ namespace Systems
         {
             if(Input.touchCount > 0)
             {
-                var physicsVelocityComponent = state.GetComponentLookup<PhysicsVelocity>();
-                var components  = _query.ToComponentDataArray<BallProperties>(Allocator.TempJob);
-                var ecb = new EntityCommandBuffer(Allocator.TempJob);
+                _physicsVelocityComponent.Update(ref state);
                 
+                var components = _query.ToComponentDataArray<BallProperties>(Allocator.TempJob);
+                var ecb = new EntityCommandBuffer(Allocator.TempJob);
+
                 for (int i = 0; i < components.Length; i++)
                 {
-                    if(components[i].IsShot) continue;
+                    if (components[i].IsShot) continue;
 
                     var entity = components[i].Ball;
-                    if(!physicsVelocityComponent.HasComponent(entity)) continue;
+                    if (!_physicsVelocityComponent.HasComponent(entity)) continue;
 
                     var ballProperties = new PhysicsVelocity
                     {
                         Angular = float3.zero,
                         Linear = GetLaunchDirection() * 10
                     };
-                    
+
                     ecb.SetComponent(entity, ballProperties);
-                    
+
                     var updatedBallProperties = components[i];
                     updatedBallProperties.IsShot = true;
                     ecb.SetComponent(entity, updatedBallProperties);
@@ -61,7 +62,7 @@ namespace Systems
         private float3 GetLaunchDirection()
         {
             Touch touch = Input.GetTouch(0);
-            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 30));
+            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 60));
             return touchPosition;
         }
     }    
