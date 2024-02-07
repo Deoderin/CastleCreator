@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShapeType: 31
+  m_ShapeType: 30
   m_PrimitiveCenter:
     x: -0.038707495
     y: -0.00003284216
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_SphereRadius: 0.97382283
   m_MinimumSkinnedVertexWeight: 0.1
   m_ConvexHullGenerationParameters:
-    m_SimplificationTolerance: 0.017185109
+    m_SimplificationTolerance: 0.04
     m_BevelRadius: 0.05
     m_MinimumAngle: 2.5000002
   m_CustomMesh: {fileID: -2092195653285792970, guid: 39ae82dc5e5930e4494b3b1361bd70fd, type: 3}
