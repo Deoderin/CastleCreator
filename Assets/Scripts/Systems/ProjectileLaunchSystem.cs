@@ -42,7 +42,7 @@ namespace Systems
                     var ballProperties = new PhysicsVelocity
                     {
                         Angular = float3.zero,
-                        Linear = GetLaunchDirection() * 10
+                        Linear = GetLaunchDirection()
                     };
 
                     ecb.SetComponent(entity, ballProperties);
