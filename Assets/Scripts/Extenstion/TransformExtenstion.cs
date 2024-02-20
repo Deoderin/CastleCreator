@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Components
+namespace Extenstion
 {
     public static class TransformExtenstion
     {

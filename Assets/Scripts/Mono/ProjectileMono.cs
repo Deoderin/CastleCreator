@@ -6,19 +6,19 @@ namespace Mono
 {
     public class ProjectileMono : MonoBehaviour
     {
-        public Transform SpawnPosition;
-        public GameObject Projectile;
-        
+        public Transform spawnPosition;
+        public GameObject projectile;
+
         public class ProjectileBaker : Baker<ProjectileMono>
         {
             public override void Bake(ProjectileMono authoring)
             {
-                var entity = GetEntity(TransformUsageFlags.Dynamic);
+                Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
                 AddComponent(entity,new ProjectileProperties
                 {
-                    SpawnPosition = authoring.SpawnPosition.position,
-                    Projectile = GetEntity(authoring.Projectile, TransformUsageFlags.Dynamic)
+                    spawnPosition = authoring.spawnPosition.position,
+                    projectile = GetEntity(authoring.projectile, TransformUsageFlags.Dynamic)
                 });
             }
         }

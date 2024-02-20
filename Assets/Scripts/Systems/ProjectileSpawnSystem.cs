@@ -16,15 +16,13 @@ namespace Systems
         {
             if(Input.GetButtonDown("Jump"))
             {
-                var ecb = new EntityCommandBuffer(Allocator.Temp);
-                
+                EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
                 foreach (RefRW<ProjectileProperties> properties in SystemAPI.Query<RefRW<ProjectileProperties>>())
                 {
-                    Entity projectile = state.EntityManager.Instantiate(properties.ValueRO.Projectile);
-                    state.EntityManager.SetComponentData(projectile, LocalTransform.FromPosition(properties.ValueRO.SpawnPosition));
+                    Entity projectile = state.EntityManager.Instantiate(properties.ValueRO.projectile);
+                    state.EntityManager.SetComponentData(projectile, LocalTransform.FromPosition(properties.ValueRO.spawnPosition));
                     ecb.AddComponent(projectile, new BallSpawnedTag());
                 }
-                
                 ecb.Playback(state.EntityManager);
             }
         }

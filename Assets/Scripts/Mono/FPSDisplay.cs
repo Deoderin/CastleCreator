@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Mono
 {
-    public class FPSDispaly : MonoBehaviour
+    public class FPSDisplay : MonoBehaviour
     {
         public Font font;
         public bool showVersion = true;

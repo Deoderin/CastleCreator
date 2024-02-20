@@ -5,8 +5,8 @@ namespace Components
 {
     public struct ProjectileProperties : IComponentData
     {
-        public float3 SpawnPosition;
-        public Entity Projectile;
+        public float3 spawnPosition;
+        public Entity projectile;
     }
 
     public struct BallSpawnedTag : IComponentData { }
