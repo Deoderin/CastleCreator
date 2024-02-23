@@ -4,6 +4,8 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Transforms;
+using UnityEngine;
 
 namespace Systems
 {
@@ -19,8 +21,12 @@ namespace Systems
 
             foreach (var allEntity in SystemAPI.Query<RefRW<PhysicsVelocity>>().WithAll<BallSpawnedTag>().WithEntityAccess())
             {
-                allEntity.Item1.ValueRW.Linear = new float3(-4,1,25);
-                ecb.RemoveComponent<BallSpawnedTag>(allEntity.Item2);
+                foreach (var prop in SystemAPI.Query<RefRW<LocalTransform>>().WithAll<AimingProperties>())
+                {
+                    allEntity.Item1.ValueRW.Linear = prop.ValueRO.Forward() * 100;
+                    ecb.RemoveComponent<BallSpawnedTag>(allEntity.Item2);
+                    Debug.LogError(prop.ValueRO.Forward());
+                }
             }
 
             ecb.Playback(state.EntityManager);
