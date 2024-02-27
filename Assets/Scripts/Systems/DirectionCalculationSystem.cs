@@ -2,7 +2,6 @@ using Components;
 using Mono;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Physics;
 using UnityEngine;
 
 namespace Systems
@@ -21,12 +20,17 @@ namespace Systems
         public void OnUpdate(ref SystemState state)
         {
             var inputProvider = InputProvider.Instance;
+
+            if(inputProvider == null)
+            {
+                return;
+            }
             
             if(inputProvider._horizontalJoystick.IsChanged || inputProvider._verticalJoystick.IsChanged)
             {
                 foreach (var prop in SystemAPI.Query<RefRW<ShootingProperties>>().WithEntityAccess())
                 {
-                    prop.Item1.ValueRW.pointPosition = new float2(inputProvider._verticalJoystick.Vertical, inputProvider._horizontalJoystick.Horizontal) * Time.deltaTime;
+                    prop.Item1.ValueRW.pointPosition = new float2(-inputProvider._verticalJoystick.Vertical, inputProvider._horizontalJoystick.Horizontal) * Time.deltaTime;
                     state.EntityManager.SetComponentEnabled<AimingTag>(prop.Item2, true);
                 }
             }

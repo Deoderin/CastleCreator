@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/MainScene/New Sub Scene.unity
-    guid: 2eb47fc1c212f624a9efc4d38153efa8
+    path: Assets/Scenes/SubScene/Tower.unity
+    guid: d25a03da9fb88204e86b7e045969ff80
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 7258922a5eccaaf46a7a58e6f0f77849
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: a9ac453f8e5781b41ac2a9fdbe475b13, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 26417267c1bc8794f987410042b2e2fa, type: 2}

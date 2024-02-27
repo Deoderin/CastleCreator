@@ -25,7 +25,6 @@ namespace Systems
                 {
                     allEntity.Item1.ValueRW.Linear = prop.ValueRO.Forward() * 100;
                     ecb.RemoveComponent<BallSpawnedTag>(allEntity.Item2);
-                    Debug.LogError(prop.ValueRO.Forward());
                 }
             }
 

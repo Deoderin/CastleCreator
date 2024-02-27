@@ -7,7 +7,8 @@ namespace Mono
     public class ProjectileMono : MonoBehaviour
     {
         public GameObject projectile;
-
+        public Transform spawnPosition;
+        
         public class ProjectileBaker : Baker<ProjectileMono>
         {
             public override void Bake(ProjectileMono authoring)
@@ -16,7 +17,7 @@ namespace Mono
 
                 AddComponent(entity,new ProjectileProperties
                 {
-                    spawnPosition = CameraSingleton.Instance.transform.position,
+                    spawnPosition = authoring.spawnPosition.position,
                     projectile = GetEntity(authoring.projectile, TransformUsageFlags.Dynamic)
                 });
             }

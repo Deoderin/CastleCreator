@@ -16,7 +16,7 @@ namespace Mono
             public override void Bake(AimingPropertiesMono authoring)
             {
                 Entity entity = GetEntity(TransformUsageFlags.Dynamic);
-                
+
                 AddComponent(entity,new AimingProperties
                 {
                     arrow = GetEntity(authoring._arrow, TransformUsageFlags.Dynamic),

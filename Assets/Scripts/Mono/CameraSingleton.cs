@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Mono
 {
@@ -11,7 +10,10 @@ namespace Mono
         
         public void Awake()
         {
-            Instance = _mainCamera;
+            if(Instance == null)
+            {
+                Instance = _mainCamera;
+            }
         }
     }
 }

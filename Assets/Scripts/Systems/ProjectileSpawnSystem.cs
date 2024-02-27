@@ -1,30 +1,39 @@
 using Components;
+using Mono;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace Systems
 {
     [BurstCompile]
     [UpdateInGroup(typeof(InitializationSystemGroup))]
-    public partial struct ProjectileSpawnSystem : ISystem
+    public partial class ProjectileSpawnSystem : SystemBase
     {
+        private bool _isSpawn;
+        
         [BurstCompile]
-        public void OnUpdate(ref SystemState state)
+        protected override void OnUpdate()
         {
-            if(Input.GetButtonDown("Jump"))
+            if(_isSpawn)
             {
-                EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+                var state = CheckedStateRef;
+                EntityCommandBuffer ecb = new(Allocator.Temp);
                 foreach (RefRW<ProjectileProperties> properties in SystemAPI.Query<RefRW<ProjectileProperties>>())
                 {
                     Entity projectile = state.EntityManager.Instantiate(properties.ValueRO.projectile);
                     state.EntityManager.SetComponentData(projectile, LocalTransform.FromPosition(properties.ValueRO.spawnPosition));
                     ecb.AddComponent(projectile, new BallSpawnedTag());
                 }
+
+                _isSpawn = false;
                 ecb.Playback(state.EntityManager);
             }
         }
+        
+        private void SpawnProjectileTrigger() => _isSpawn = true;
+        protected override void OnCreate() => InputProvider.shoot += SpawnProjectileTrigger;
+        protected override void OnDestroy() => InputProvider.shoot -= SpawnProjectileTrigger;
     }
 }
