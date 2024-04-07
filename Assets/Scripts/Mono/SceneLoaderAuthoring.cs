@@ -1,13 +1,13 @@
 using Unity.Entities;
 using Unity.Entities.Serialization;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEditor;
 
 namespace Mono
 {
     public class SceneLoaderAuthoring : MonoBehaviour
     {
-        public UnityEditor.SceneAsset _scene;
+        public SceneAsset _scene;
 
         class Baker : Baker<SceneLoaderAuthoring>
         {

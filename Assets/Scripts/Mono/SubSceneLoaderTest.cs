@@ -1,13 +1,14 @@
 using System.Collections;
 using Unity.Entities;
 using Unity.Scenes;
+using UnityEditor;
 using UnityEngine;
 
 namespace Mono
 {
     public class SubSceneLoaderTest : MonoBehaviour
     {
-        public SubScene subSceneToLoad;
+        public SceneAsset subSceneToLoad;
  
         private Entity subScene;
 
@@ -28,8 +29,11 @@ namespace Mono
                 Flags = SceneLoadFlags.NewInstance
             };
  
-            subScene = SceneSystem.LoadSceneAsync(World.DefaultGameObjectInjectionWorld.Unmanaged, subSceneToLoad.SceneGUID, loadParameters);
- 
+            var sceneSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystem<SceneSystem>();
+            var state = World.DefaultGameObjectInjectionWorld.Unmanaged.ResolveSystemStateRef(sceneSystem);
+
+            //subScene = SceneSystem.LoadSceneAsync(World.DefaultGameObjectInjectionWorld.Unmanaged, new Hash128, loadParameters);
+            state.EntityManager.AddComponentObject(subScene, this);
             Debug.LogError("KEKA");
             
             StartCoroutine(CheckScene());

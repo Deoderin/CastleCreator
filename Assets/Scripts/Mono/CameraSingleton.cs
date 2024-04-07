@@ -15,5 +15,11 @@ namespace Mono
                 Instance = _mainCamera;
             }
         }
+
+        private void OnDestroy()
+        {
+            Debug.Log("DDDD");
+            Instance = null;
+        }
     }
 }

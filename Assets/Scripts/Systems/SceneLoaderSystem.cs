@@ -20,10 +20,11 @@ namespace Systems
         protected override void OnUpdate()
         {
             var requests = _newRequests.ToComponentDataArray<SceneLoader>(Allocator.Temp);
-            
+            var sceneSystem = World.GetExistingSystem<SceneSystem>();
+
             for (int i = 0; i < requests.Length; i += 1)
             {
-                Debug.LogError("KEKA");
+
                 SceneSystem.LoadSceneAsync(World.Unmanaged, requests[i].sceneReference);
             }
 
